@@ -7,4 +7,5 @@ using namespace std;
 namespace Study {
     void hello(void);
     void testRatio(void);
+    void testString(void);
 }

@@ -11,6 +11,7 @@ int main(int argc, char **argv){
 
     Study::hello();
     Study::testRatio();
+    Study::testString();
 
     return 0;
 }
