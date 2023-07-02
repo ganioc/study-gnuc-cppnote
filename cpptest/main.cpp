@@ -13,5 +13,11 @@ int main(int argc, char **argv){
     Study::testRatio();
     Study::testString();
 
+    Study::point p(10.0, -5.0);
+    cout << p << endl;
+
+    Study::testIns();
+    Study::testRegex();
+
     return 0;
 }

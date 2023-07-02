@@ -2,8 +2,40 @@
 #include <algorithm>
 #include <ratio>
 #include <locale>
+#include <iomanip>
+#include <istream>
+#include <regex>
 
 #include "study.h"
+
+void testMoney(void){
+    double d = 12.345678;
+    cout << fixed;
+    cout << setfill('#');
+    cout << setw(15) <<  d << "n" << endl;
+
+    vector<pair<string, double>> table {
+        {"one", 0},
+        {"two", 0},
+        {"three", 0},
+        {"four", 0}
+    };
+    double d2 =0.1;
+    for(pair<string,double> &p:table){
+        p.second = d2/17.0;
+        d2 += 0.1;
+    }
+
+    cout << fixed << setprecision(6);
+    for(pair<string, double> p: table){
+        cout << setw(6) << left << p.first << setw(10) << p.second << "n" << endl;
+    }
+
+    time_t t = time(nullptr);
+    tm *pt = localtime(&t);
+    cout << put_time(pt, "time = %X date = %x") << "n" << endl;
+
+}
 
 namespace Study{
     void hello(void){
@@ -65,5 +97,39 @@ namespace Study{
         cout << scientific;
         cout << d3 << "n" << endl;        
 
+        testMoney();
+    }
+
+
+    ostream& operator<<(ostream& out, const point& p){
+        out << "(" << p.x << "," << p.y << ")";
+        return out;
+    }
+
+    void testIns(void){
+        std::istringstream ss("-1.0e-6");
+        int i;
+        ss >> i;
+        string str;
+        ss >> str;
+        cout << "extracted " << i << " remainder " << str << endl; 
+    }
+    void testRegex(void){
+        regex rx("[at]");
+
+        cout << boolalpha;
+        cout << regex_match("a", rx) << endl;
+        cout << regex_match("at", rx) << endl;
+
+        string str("trumpet");
+        regex rx2("(trump)(.*)");
+        match_results<string::const_iterator> sm;
+        if(regex_match(str, sm, rx2)){
+            cout << "the matches were:";
+            for(unsigned i = 0; i< sm.size(); ++i){
+                cout << "[" << sm[i] << "," << sm.position(i) << "]";
+            }
+            cout << endl;
+        }
     }
 }
