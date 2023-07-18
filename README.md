@@ -39,9 +39,19 @@ cassert(),
 - 通过try代码抛出异常来保护代码，捕获已知的异常，并抛出
 - 使用try保护所有代码, 捕获和处理所有异常，因此调用代码无需抛出任何异常
 
-```
+
+## Boost 提供6种智能指针
+
+- shared_ptr
+- weak_ptr
+- scoped_ptr
+- scoped_array
+- shared_array
+- intrusive_ptr
 
 
-```
+
+
+
 
 

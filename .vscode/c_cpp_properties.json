@@ -4,7 +4,9 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/cpptest/include"
+                "${workspaceFolder}/cpptest/include",
+                "/usr/include/boost",
+                "/usr/include"
             ],
             "defines": [],
             "intelliSenseMode": "linux-gcc-x64",
