@@ -1,9 +1,13 @@
 
+# language('c')
+
 subdir('src')
 
 incdir = ['include']
 
-srcs = ['main.cpp', sources]
+srcs = ['main.c', sources]
+
+
 
 
 executable('pthread',

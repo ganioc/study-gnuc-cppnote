@@ -1,5 +1,5 @@
 
 message('hi src directory in pthread')
 
-sources=files()
+sources=files('llst.c')
 
