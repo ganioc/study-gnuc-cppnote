@@ -6,7 +6,7 @@ incdir = ['include']
 
 srcs = ['main.c']
 
-
+dep = dependency('libffi')
 
 
 lib1 = library('somelib',
@@ -22,3 +22,8 @@ executable('appffi',
     link_with: lib1
     )
 
+executable('appffi2',
+    ['mainffi.c'],
+    include_directories: incdir,
+    dependencies: [dep]
+    )

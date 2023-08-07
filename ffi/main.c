@@ -37,5 +37,6 @@ int main(int argc, const char* argv[]){
 
     printf("dout = {%d, %lf}\n", dout.num, dout.dnum);
 
+
     return 0;
 }
