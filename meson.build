@@ -8,3 +8,5 @@ subdir('boosttest')
 
 subdir('pthread')
 
+subdir('ffi')
+
