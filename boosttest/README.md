@@ -44,5 +44,21 @@ UserAllocator
 ## object_pool
 类实例的内存池,
 
+## chap 2 Boost's Utilities
+Boost.Optional, may or may not have a value,
+
+Boost.Tuple, ordered sets of heterogeneous values, generalization of std::pair,
+
+metafunction, type computation,
+
+POD, Plain Old Data types, 
+
+
+Variant,
+
+Any, 用来代替union, 也就是一个变量可以有几种类型之一,
+
+
+
 
 

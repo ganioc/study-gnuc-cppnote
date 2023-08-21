@@ -1,5 +1,6 @@
 #include<iostream>
 #include "mem.h"
+#include "util.h"
 
 using namespace std;
 
@@ -12,6 +13,10 @@ int main(int argc, char**argv){
     Bootest::testFactory();
     Bootest::testWeak();
     Bootest::testPool();
+
+    Booutil::sayHello();
+    Booutil::testTuple();
+    Booutil::testVariant();
 
     return 0;
 }

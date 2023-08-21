@@ -1,4 +1,4 @@
 
 message('boost src directory')
 
-sources=files('mem.cpp')
+sources=files(['mem.cpp', 'util.cpp'])
