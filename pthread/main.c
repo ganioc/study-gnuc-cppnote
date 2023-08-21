@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "llst.h"
-
+#include "multi.h"
 
 
 int main(){
@@ -9,7 +9,7 @@ int main(){
 
     testllst();
 
-    
+    testPthread();
 
     return 0;
 }
