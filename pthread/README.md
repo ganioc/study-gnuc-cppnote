@@ -56,7 +56,36 @@ Models:
   - each processing stage handle a different unit of input at a time
   - image processing, text processing, 
 
+buffer,
+  a shared buffer, in the process's global data region,
+  a lock, synchronize the access to it, mutex variable as a lock
+  a suspend/resume mechanism,using conditional variable
+  state information, some flag or variable, indicate buffer length
 
+producer, consumer, 
+
+double buffering,
+
+**ATM example**
+client program
+
+server program
+  使用select来确定有多少channel have data, waiting to be read
+  Using asynchronous I/O, 
+
+communicate with Unix socket,
+
+synchronization,同步:
+- Accounts, 多个线程访问同一账号, 使用mutex variable
+- Limiting the number of workers. 防止CPU overloading, 
+- Server shutdown, 必须完成所有的任务之后，才能关闭server,
+
+优化:
+- thread pool, 
+- interrupt , cancellation, boss thread可以关闭worker thread
+- scheduling, 某些worker thread的优先级会更高一些,
+
+**Matrix Multiplication Program example**
 
 
 
