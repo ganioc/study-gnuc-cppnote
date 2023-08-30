@@ -86,6 +86,13 @@ synchronization,同步:
 - scheduling, 某些worker thread的优先级会更高一些,
 
 **Matrix Multiplication Program example**
+加快运算，2种方式, overlapping I/O, parallel processing,
+
+## chap 3 Synchronizing Pthreads
+线程的同步
+
+
+
 
 
 

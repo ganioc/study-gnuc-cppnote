@@ -28,4 +28,12 @@ executable('atm_srv_serial',
 executable('atm_svr',
     atm_svr_thread,
     include_directories:incdir)
+
+executable('matrix_mul',
+    matrix_mult_srcs,
+    include_directories:incdir)
+
+executable('matrix_mul_thread',
+    matrix_mult_thread_srcs,
+    include_directories: incdir)
     
