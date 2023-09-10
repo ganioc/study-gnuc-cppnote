@@ -91,7 +91,27 @@ synchronization,同步:
 ## chap 3 Synchronizing Pthreads
 线程的同步
 
+出问题, in one of hundred times, single indivisible transaction, atomic,
 
+race condition, 
+
+* pthread_join
+* mutex variable functions, mutual exclusion, 
+* condition variable functions
+* pthread_once, 
+
+同步方式：
+* Reader/writer exclusion, 多个线程同时读取数据，保证任何写线程拥有对访问的绝对控制权
+* Threadsafe data structures, 数据结构里就包含了同步的原语
+* Semaphore, semaphores, 信号量, coutning semaphore, 
+
+
+pthread,
+```shell
+pthread_mutex_lock
+pthread_mutex_unlock,
+
+```
 
 
 
