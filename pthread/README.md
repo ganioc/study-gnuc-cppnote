@@ -176,7 +176,23 @@ condition variable如果不使用mutex的话，signaling thread可能在waiting 
 
 
 ### reader/writer locks
+mutex + condition variable, create a third - the reader/writer lock
 
+```C
+pthread_rdwr_init_np
+pthread_rdwr_rlock_np // obtain read lock
+pthread_rdwr-runlock_np
+pthread_rdwr_wlock_np // obtain write lock
+pthread_rdwr_wunlock_np
+```
 
+```C
+pthread_rwlock_init
+
+```
+
+给ATM项目加上同步控制, 
+
+### threadpool
 
 

@@ -20,3 +20,9 @@ process_shared_mutex_srcs = files(['process_mutex.c'])
 cvsimple_srcs = files([
     'cvsimple.c'
 ])
+
+llist_threads_rw_srcs = files(['llist_threads_rw.c'])
+
+rdwr_srcs = files(['rdwr.c'])
+
+

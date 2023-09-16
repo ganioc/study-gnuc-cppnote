@@ -50,4 +50,18 @@ executable('cvsimple',
     cvsimple_srcs,
     include_directories:incdir)
 
-    
+executable('llist_threads_rw',
+    llist_threads_rw_srcs,
+    include_directories: incdir)
+
+executable('rdwr',
+    rdwr_srcs,
+    include_directories: incdir)
+
+
+
+
+
+
+
+
