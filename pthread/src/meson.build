@@ -13,3 +13,10 @@ matrix_mult_srcs = files(['matrix_mul.c'])
 
 matrix_mult_thread_srcs = files(['matrix_mul_thread.c'])
 
+llist_srcs=files(['llist.c'])
+
+process_shared_mutex_srcs = files(['process_mutex.c'])
+
+cvsimple_srcs = files([
+    'cvsimple.c'
+])

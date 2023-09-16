@@ -110,9 +110,72 @@ pthread,
 ```shell
 pthread_mutex_lock
 pthread_mutex_unlock,
+pthread_mutex_trylock,
+pthread_once,
 
 ```
 
+* Direct access to data and resources. 并不是特别的高效。
+* Reader/writer locks, 
+* recursive lock, 可以反复被调用者lock, recursive mutex, 进入代码段时只是简单地增加计数值，而不会做任何操作系统级别的行为
+
+
+
+event synchronization, 
+
+
+mutex的竞争,
+  选择哪一个thread呢, 是根据individual thread的scheduling priorities, 任务调度优先级,
+priority inversion,
+  低优先级thread锁住了高优先级thread需要的lock, 
+
+多个线程访问linked list时, 会发生意想不到的情况。
+
+non-threadsafe, nonreentrant code, 
+
+设计同步的数据结构，需要做到2点:
+* 消除所有的竞争条件
+* 不要引入死锁
+
+最简单的方式是对entire list的所有访问，增删改查，都使用一个独立的mutex保护,然而在访问频繁的情况下，这种方式的效率就比较低了。
+
+一些特殊的处理方式为:
+  如果大部分行为是读写存在的数据节点的话，而不是插入删除的话，可以对每个节点建立一个mutex变量,
+  lock granularity, 对共享数据加锁的级别, 
+  coarse-grain locking, single mutex to control access to all shared data,
+  fine-grain locking, a lock on every individually data, 
+  to use the most efficient implementation while ensuring the application works correctly,
+
+Locking hierarchy, 加锁的级别，层次,
+  deadly embrace, 
+  为了避免问题, enforce a fixed locking hierarchy, 
+
+在进程间共享mutex,
+  compile time definition, __POSIX_THREAD_PROCESS_SHARED,
+  mutex attribute object,
+  pthread_mutex_attr_t, 
+  in shared memory, or through mmap calls,
+
+
+一些惯例:
+  process-to-process synchronization, semaphores,
+  thread-to-thread, semaphores, alternative to process-shared mutexes
+
+### condition variables,
+条件变量，对变量的值进行同步,
+
+```shell
+pthread_cond_wait()
+pthread_cond_timedwait()
+pthread_cond_signal()
+pthread_cond_broadcast(),
+```
+
+### 同时使用 mutex 和condition variable
+condition variable如果不使用mutex的话，signaling thread可能在waiting thread开始等待之前就会发送信号signal,
+
+
+### reader/writer locks
 
 
 

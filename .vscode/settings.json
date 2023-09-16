@@ -2,7 +2,8 @@
     "mesonbuild.configureOnOpen": true,
     "files.associations": {
         "iostream": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "stdbool.h": "c"
     },
     "C_Cpp.default.compileCommands": "builddir/compile_commands.json"
 }

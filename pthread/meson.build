@@ -36,4 +36,18 @@ executable('matrix_mul',
 executable('matrix_mul_thread',
     matrix_mult_thread_srcs,
     include_directories: incdir)
+
+executable('llist',
+    llist_srcs,
+    include_directories: incdir)
+
+
+executable('process_mutex',
+    process_shared_mutex_srcs,
+    include_directories: incdir)
+
+executable('cvsimple',
+    cvsimple_srcs,
+    include_directories:incdir)
+
     
