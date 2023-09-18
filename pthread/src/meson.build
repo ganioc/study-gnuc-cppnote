@@ -25,4 +25,6 @@ llist_threads_rw_srcs = files(['llist_threads_rw.c'])
 
 rdwr_srcs = files(['rdwr.c'])
 
+tpool_srcs = files(['tpool.c'])
+
 

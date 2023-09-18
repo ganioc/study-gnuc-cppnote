@@ -58,6 +58,10 @@ executable('rdwr',
     rdwr_srcs,
     include_directories: incdir)
 
+executable('tpool',
+    tpool_srcs,
+    include_directories:incdir)
+
 
 
 

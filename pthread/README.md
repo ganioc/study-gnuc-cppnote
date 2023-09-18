@@ -194,5 +194,8 @@ pthread_rwlock_init
 给ATM项目加上同步控制, 
 
 ### threadpool
-
+thread pool basic 特性
+- number of worker threads,
+- request queue size,
+- behavior when all workers are occupied and request queue is full,
 
