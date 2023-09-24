@@ -199,3 +199,80 @@ thread pool basic 特性
 - request queue size,
 - behavior when all workers are occupied and request queue is full,
 
+## chap 4 Managing pthreads, 管理线程
+### 线程属性
+In the detached state, 配置线程的stack, scheduling 行为，
+
+```shell
+pthread_attr_t
+pthread_create()
+```
+
+stack size,
+    线程使用它自己的私有栈来存储本地变量，对于调用的每一个routine, 
+
+detached state, 
+
+设置属性的多个参数, 
+
+
+
+### pthread_once,mechanism
+只会运行一次, 只有一次, chorese, 日常工作，乏味的工作,如何避免多个线程在初始化时，只做一次初始化工作，比如打开某个第三方的库。
+
+
+Keys,
+    保存一个private copies of shared data item, 
+    a kind of pointer, 
+    共性, libraries with internal state, 
+    非线程环境，key referenced data be as static data,
+
+```C
+static pthread_key_t conn_key;
+pthread_key_create(key, destructor routine);
+pthread_setspecific()
+pthread_getspecific()
+```
+
+Cancellation,
+    取消线程、终止线程的运行，one thread cancel another thread,
+  
+Scheduling,
+    任务调度, real-time applications, 
+    设置2个thread-specific attributes属性,
+    scheduling priorityA thread's scheduling priority,
+    哪一个线程可以在任意时间获得cpu资源
+    同样级别的线程如果分享cpu资源
+    scheduling priority, policy thread attributes,
+
+Mutex scheduling attributes,
+    避免priority inversion, 
+
+**scheduling scope**
+线程参加的调度活动、调度过程的范围。多少线程、线程的数量，调度器需要选择的彼此竞争的线程的数量。
+
+实现时，线程的调度要么在进程范围，要么在系统范围。
+许多操作系统允许将cpu作为单独的调度对象，这些分组grouping,称为"processor set"处理器组, 由系统调用生成，或者管理员的命令生成。Pthreads标准承认这些处理器组的存在，将之作为调度的分配域，allocation domains. 
+
+```c
+PTHREAD_SCOPE_SYSTEM
+PTHERAD_SCOPE_PROCESS
+pthread_getscope()
+pthread_setscope()
+```
+将管理的进程、线程抽象化，将调度的cpu资源抽象化。
+
+- 当我们说到pool of threads,线程池时
+  - 在进程域，所有的线程都在同一个进程里
+  - 在系统域，所有进程的所有线程都在同一个分配域中,allocation domain
+- 当我们说调度器scheduler时,
+  - 在进程域，我们指的是pthread library,或操作系统内核的调度程序
+  - 在系统域，我们指的是操作系统的调度程序
+- 当我们说到processing slot, 处理slot,
+  - 在进程域，分配给进程的cpu时间，
+  - 在系统域，分配给某个线程的cpu时间
+
+可运行和被阻塞的线程
+
+
+
