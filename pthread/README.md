@@ -274,5 +274,70 @@ pthread_setscope()
 
 可运行和被阻塞的线程
 
+**priority ceiling**
+优先级取顶协议，将调度优先级设置一个mutex, mutex可以给它的持有人一个有效的相同的运行优先级，如果mutex的持有人开始时的优先级较低的话。
+```c
+_POSIX_THREAD_PRIO_PROTECT,
+_POSIX_THREAD_PRIO_INHERIT,
+```
+
+**priority inheritance**
+优先级继承协议，使mutex可以提高拥有者的优先级，和正在等待的线程中的最高优先级相同。
+
+## chap 5 Pthreads and UNIX
+os操作process进程，而不是线程 
+
+- signals, pthreads标准提供了一种线程的方法，参与signal handling,
+- threadsafe libraries, 避免不同线程之间的竞争
+- Cancellation-safe library, 
+- Blocking functions, 
+- Process management, 
+- Multiprocessor memory synchronization, 保证threads' views of shared data,包含mutexes, condition variable的状态是一致的。在单处理器、多处理器都要正常工作
+
+发送信号和等待信号
+
+&nbsp;&nbsp;&nbsp;&nbsp;kill系统调用, 进程亦可以发送信号signal给自己，使用kill或raise系统调用
+信号的到来会打断进程的执行。一些信号会回复进程的执行，当该进程因为调用系统调用wait, sigsuspend, sleep,pause而被操作系统挂起时。
+&nbsp;&nbsp;&nbsp;&nbsp;使用signal mask来阻塞信号的接收,进程可以使用sigaction, sigsuspend调用来设置、重置信号的阻塞状态。
+
+
+**多线程的信号处理,**
+当进程收到信号时，系统要决定由哪一个线程来处理信号。选择方式有
+
+同步产生的信号，系统产生，因为发生了exception异常
+    接收者是某个线程，
+    产生异常的线程
+
+
+同步产生，内部的线程使用了pthread_kill系统调用，
+    接收者是某个线程，不能发给其它进程的线程,
+    targeted线程，
+
+
+异步产生，外部进程使用了kill系统调用
+    接收者是整个的进程，
+    进程中的所有线程接收，根据每个线程的signal masks,
+    pthread_sigmask, to block, unblock signals
+    系统会选择一个thread来处理信号,
+    所有的线程共享进程的own signal action, sigaction structure,
+    一个线程sigaction了调用，其它的线程的触发也能够使用
+
+SIGFPE, divide by Zero
+SIGSEGV, 访问了错误的内存地址
+SIGPIPE, broken pipe,管道不存在
+
+job control signals,
+- SIGALRM
+- SIGHUP
+- SIGINT
+- SIGKILL
+- SIGUSR1, SIGUSR2,
+
+
+
+
+
+
+
 
 
