@@ -4,6 +4,8 @@
 #include "util.h"
 
 namespace Booutil{
+using boost::any_cast;
+
 void sayHello(){
     cout << "util code:" << endl;
 }
@@ -59,7 +61,45 @@ void testVariant(){
     cout << "index:" << index << endl;
 
 }
+void testAny(){
+    cout <<"test boost:any" << endl;
+    boost::any v1,v2,v3,v4;
 
+    assert(v1.empty());
+    const char *hello = "Hello";
+    v1 = hello;
+    v2 = 42;
+    v3 = std::string("Hola");
 
+    MyValue m1(10);
+    v4 = m1;
+
+    try{
+        cout << any_cast<const char*>(v1) << endl;
+        cout << any_cast<int>(v2) <<endl;
+        cout << any_cast<string>(v3) << endl;
+        auto x = any_cast<MyValue>(v4);
+        cout << x.get() << endl;
+    }catch(std::exception& e){
+        cout << e.what() << endl;
+    }
+
+    boost::any value;
+    value  = 20;
+    if(value.type().hash_code() == typeid(int).hash_code()){
+        cout << any_cast<int>(value) << endl; 
+    }
+}
+void testCast(){
+    cout << "Test cast" << endl;
+    string str = "1234";
+
+    try{
+        int n = boost::lexical_cast<int>(str);
+        assert(n == 1234);
+    }catch(std::exception& e){
+        cout << e.what() << endl;
+    }
+}
 
 }

@@ -17,6 +17,8 @@ int main(int argc, char**argv){
     Booutil::sayHello();
     Booutil::testTuple();
     Booutil::testVariant();
+    Booutil::testAny();
+    Booutil::testCast();
 
     return 0;
 }

@@ -58,7 +58,23 @@ Variant,
 
 Any, 用来代替union, 也就是一个变量可以有几种类型之一,
 
+**recursive_variant**
 
+**Boost.Any**
+支持任意数据，必须支持RTTI, Runtime Type Identification(RTTI), 
+存储numerica data, character arrays, non-POD (Plain Old Data) type objects,
+```c
+boost::any_cast; // 进行数据类型的强制转换
+```
+
+**Boost.Conversion**
+需求，将文字转为数字类型，根据数字类型输出为不同的文本形式。
+如基本的转换函数
+```c
+atoi, strtol,strtod, itoa, ecvt, fcvt,
+boost::lexical_cast<>()
+```
+在类型之间做转换, 广义的类型转换句法, extended to arbitray types?
 
 
 
