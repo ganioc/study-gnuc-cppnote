@@ -333,6 +333,216 @@ job control signals,
 - SIGKILL
 - SIGUSR1, SIGUSR2,
 
+asynchronous signal-safe functions, 可以安全地从signal handler被调用的函数。这些函数有一个特别的属性，reentrancy,允许重入。
+
+POSIX calls可以从信号处理函数调用的有:
+```shell
+access,  alarm, cfgetispeed, cfsetispeed, cfsetospeed
+chdir, chmod, chown, close, creat, dup,
+dup2, execle, execve, _exit, fcntl, fork,
+fstat, getgroups, getpgrp, getpid, getppid, getuid,
+kill, link, lseek, mkdir, mkfifo, open,
+pathconf, puase, pipe, read, rename, rmdir,
+setgid, setpgid, setsid, setuid, sigaction, sigaddset,
+sigdelset, sigemptyset, sigismember, sigpending, sigprocmask,
+sigusspend,sleep, stat, sysconf, tcdrain, tcflow,
+tcflush, tcgetattr, tcgetpgrp, tcsendbreak, tcsetattr,
+tcsetup, time, times, umask, uname,
+unlink, utime, wait, waitpid, write,
+```
+如果系统支持POSIX实时扩展，还可以调用
+```powershell
+aio_error, aio_return,aio_suspend,
+clock_gettime, fdatasync, fsync,
+getegid, geteuid, sem_post,
+sigqueue, timer_getoverrun, timer_gettime,
+timer_settime,
+```
+当需要pthread接收并处理signal时，可以使用sigwait系统调用
+- Mask the signal 在所有的线程里面, sigwait会检测到这些信号, signal
+- 用一个专门的thread来等待信号的到来
+- 在一个专门的thread里循环调用sigwait,
+
+ATM的例子里, 增加接收命令，关闭的功能。
+当服务器接收到关闭请求时，必须
+- 让工作线程完成当前的工作
+- boss线程不会再生成新的工作线程
+
+我们会生成一个新的线程->shutdown thread, 
+- 这个线程会设置一个全局变量，表明shutdown开始了
+- 其它的线程都block对SIGUSR1信号的处理, 
+- 当收到信号后，检查当前的worker thread的数量，等待减为零
+- exit，退出程序
+
+**线程安全，线程不安全**
+线程调用第三方库的时候要注意，这个库可能被不同的进程调用, 如果使用了公共的buffer,运行时就会出问题。将buffer放在线程的stack之上，即可。
+
+**使用errno得库**
+使用errno的系统调用会对多线程程序产生问题。对于一个process,只有一个公共的errno公共变量。
+Pthread标准将errno,实现为一个宏。展开时，会返回一个线程相关的错误值。
+Pthread的解决办法是生成一些新的线程安全的调用接口
+```c
+asctime_r, ctime_r, getgrgid_r, getgrnam_r,
+getlogin_r, getpwnam_r, getpwuid_r, gmtime_r,
+localtime_r, rand_r, readdir_r, strok_r
+ttyname_r,
+```
+
+**file-locking functions for threads**
+flock是用于进程间共享的，
+用于线程共享的是
+```c
+flockfile, // locks a file on a per-thread basis
+ftrylockfile,
+funlockfile,
+```
+一般需要查找操作系统文档, 线程安全的函数库为libxxx_r.a, 原始的函数库为libxxx.a
+
+调用时，使用mutex或者condition来使只有一个线程访问那些线程调用不安全的接口。
+
+**线程取消，cancellation**
+多线程环境里的线程取消。
+- 在线程执行某些系统调用的时候，我们能够取消线程吗？
+- 对一个延迟的取消，这些调用可以作为取消的时间点吗?
+
+**asynchronous cancellation-safe**
+异步的取消安全的函数, 
+在系统调用编写的时候，是不考虑线程的存在的。定义一个随机取消安全的wrapper,
+```c
+#define async_cancel_safe_read(fd,buf,amt) \{
+int oldtype; \
+pthread_setcanceltype(PTHREAD_CANCEL_DEFERRED,&oldtype);
+if(read(fd,buf,amt) <0)
+    perror("read")
+    exit(-1)
+pthread_setcanceltype(oldtype, NULL)
+pthread_testcancel();
+}
+```
+作为cancellation points的pthread调用
+```c
+pthread_testcancel,
+pthread_cond_wait,
+pthread_cond_timedwait,
+pthread_join
+```
+POSIX.1和ANSI C routines可以作为cancellation points的
+```shell  
+closedir, ctermid, fclose, fcntl, fflush,
+fgetc, fgets, fopen, fprintf, fputc,
+fputs,fread, freopen, fscanf, fseek,
+ftell, fwrite, getc, getchar, getchar_unlocked,
+getc_unlocked, getcwd, getgrgid, getgrgid_r, getgrnam,
+getgrnam_r, getlogin, getlogin_r, getpwnam, getpwnam_r,
+getpwuid, getpwuid_r, gets, lseek, opendir,
+perror, printf, putc, putchar, putchar_unlocked,
+putc_unlocked, puts, readdir,remove, rename,
+rewind, rewinddir, scanf, tmpfile, tmpname,
+ttyname, ttyname_r, ungetc, unlink
+```
+下面这些调用必须定义为cancelation points,
+```shell  
+aio_suspend, close, creat, fcntl, fsync, mg_receive,
+mg_send, msync, nanosleep, open, pause, read,
+sem_wait, sigsuspend, sigtimedwait, sigwait, sigwaitinfo, sleep,
+system,tcdrain, wait, waitpid,write,
+```
+ 
+**线程阻塞的库函数和系统调用**
+suspend current thread not the whole process 调用包括
+```shell  
+fcntl, open, pause , read,
+sigsuspend, sleep, wait, waitpid
+write
+```
+如果不满足的话，可以
+- fork another process to do the call, 
+- 使用nonblocking alternatives, 
+
+**线程和进程管理**
+从线程中调用fork, exec会发生什么呢?
+生成一个子进程只有一个线程的复制，也就是调用进程。会继承parent的held locks, confusion and deadlock. 子进程继承了heap areas, memory leaks, data loss, bug reports.
+
+pthread_atfork调用来处理这些问题。
+- routines placed on the prepare stack are run in the parent before the fork
+- routines placed on the parent stack, are run in the parent after the fork
+- routines placed on the child stack are run in the child after the fork
+
+**multiprocessor Memory Synchronization**
+Pthread标准需要库实现内存写的同步。for a subset of Pthreads and POSIX.1 functions. 
+必须同步memory操作的函数包括
+```powershell
+pthread_cond_broadcast, pthread_mutex_unlock,
+pthread_cond_signal, sem_post,
+pthread_cond_timedwait, sem_trywait,
+pthread_cond_wait, sem_wait,
+pthread_create, fork,
+pthread_join, wait,
+pthread_mutex_trylock, waitpid,
+pthread_mutex_lock,
+```
+线程不安全的库还是会存在，因为性能原因，或者数量原因，占大多数。
+
+## chap 6 Practical Considerations
+### 理解Pthreads的实现
+实现方式，based in user space or kernel space, 或者是中间方案: two-level schedulers, lightweight processes(LWP), or activations,
+
+纯用户线程的实现, 不提供全局scheduling scope, 实际上不允许同一个进程的线程运行在不同的CPU上,
+all-to-one mapping, 一个process的所有pthreads运行, scheduler选择一个线程进行运行, library scheduler, 使用了Unix Programmer传统上管理一个进程里的多个上下文的方式进行编程，比如
+- setjmp,
+- longjmp
+- signals,
+
+Pthread library 可以定义一个user thread as a data structures,存储了execution point in the form of jmp_buf数据结构，被setjmp存储。当线程被选中时，longjmp 到新线程的执行点，根据存储的jmp_buf 数据
+
+纯用户空间实现的优点,
+- 不用修改kernel threads,
+- 不使用昂贵的系统调用来生成线程，不需要内核来切换上下文，执行会快一些
+- 内核是不知道用户线程的存在的，因此对内核没有影响, 
+纯用户空间实现的缺点
+- 线程优先级无法被kernel调用切换，抢占必须由用户来实现
+- 无法利用多核处理器，
+
+纯kernel-thread实现，无法扩展当一个进程拥有了几十、上百个线程的需求时,
+为每个线程生成一个kernel hread,
+one-to-one mapping, 
+当cpu空闲的话，kernel会将线程分配给cpu，不管线程属于哪一个进程
+每个线程有自己的优先级，调度器优先级，存储的寄存器值，
+
+纯内核空间实现的优点
+- 优先级调度
+- 利用多cpu，
+缺点:
+- 开销更大一些
+- 使用巨量线程的话会给cpu带来负担，下降整个的性能，影响所有的应用程序
+
+Two-level调度器的实现,
+将用户线程映射到一个kernel thread pool,内核线程池, some-to-one mapping。库和kernel都存储了关于线程的数据结构，
+high I/O activity and high intense CPU use over time, 
+
+2种线程
+满足portable Pthread interface, 可移植性Pthread接口,
+
+### 调试Debugging,
+race conditions, deadlocks, 
+Event ordering, 
+通常是因为多个线程访问共享数据造成的。
+```c
+ladebug
+```
+
+
+### 性能Performance,
+获得比单线程更好的性能，如何测量，如何调试性能呢?
+
+Profiling a thread,
+```c
+prof
+pixie,
+```
+
+## Appendix A,
+
 
 
 
