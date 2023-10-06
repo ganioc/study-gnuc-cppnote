@@ -3,7 +3,11 @@
     "files.associations": {
         "iostream": "cpp",
         "iosfwd": "cpp",
-        "stdbool.h": "c"
+        "stdbool.h": "c",
+        "ostream": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "algorithm": "cpp"
     },
     "C_Cpp.default.compileCommands": "builddir/compile_commands.json"
 }

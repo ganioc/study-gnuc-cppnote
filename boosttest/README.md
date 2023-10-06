@@ -76,5 +76,28 @@ boost::lexical_cast<>()
 ```
 在类型之间做转换, 广义的类型转换句法, extended to arbitray types?
 
+**处理命令行参数**
+Boost.Program_Options library,
+
+- short option, -U, 
+- long option,  --unified, --unified=5
+- switch or flag, -p, -pN, two switches, 
+
+几条规则:
+- short options, 开始以single hyphen
+- long options, 开始以double hyphens
+- short options, option-values 中间以空格隔开
+- long options, option-values,中间以等号隔开
+- 将short switches 写在一起
+
+对于POSIX-compliant 系统，这就是标准的表达方式，如Linux. Windows下的表达又有所不同，使用Boost库的话，可以帮助我们处理这些平台选择的问题。
+
+parsing positional parameters,
+多个value, multitoken(),
+
+Boost还包括一些微库, micro-libraries, 提供一些有用的功能。这些库放在Boost.Utility, 和Boost.Core下面。
+
+查看**compile-time check**信息
+BOOST_CURRENT_FUNCTION,
 
 
