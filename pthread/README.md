@@ -542,10 +542,22 @@ pixie,
 ```
 
 ## Appendix A,
+复杂和异步事件,门事件。已经解决了字体问题。
 
+DCE (Distributed Computing Environment), 由OSF(Open Software Foundation)组织开发。
+DCE包含了很多编程工具和服务器程序, 使用了远程过程调用(RPC),彼此之间通讯。DCE应用天生就适合使用Pthread,线程。Pthread role in DCE-based application 应用。
 
+DCE使用Draft 4 Pthread interface. 
 
+**DCE server**
+等待client requests on communication channel, 到达后处理请求。DCE server的engine使用了Posix threads来处理多个请求，并行。
 
+```c
+rpc_server_listen()
+```
+distributed application based on a client/server model. 生成一个IDL(Interface Definition Language)文件定义所有可能得client calls.
+
+## Appendix C Pthreads Quick Reference
 
 
 
