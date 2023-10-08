@@ -22,3 +22,11 @@ executable('boostoption',
 executable('currentfunc',
     currentfunc_srcs,
     include_directories: incdir)
+
+executable('memmanage',
+    memmanage_srcs,
+    include_directories: incdir)
+
+
+
+
