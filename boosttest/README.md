@@ -188,9 +188,61 @@ boost::checked_delete();
 * exhibit unique ownership semantics,语义学
 * 不能放在C++的标准container里面使用
 * 最简单的形式, lightweight, versatile smart pointer, scope guard
+* 在local使用, 作为一个local scope guard in function, 
+* 也可以作为class member, 当类的成员发生异常时，如何安全地释放类成员的资源，动态分配的对象，成为一个难题。使用try/catch, 也不优雅。使用智能指针可以解决。
 
+```cpp
+boost::scoped_array
+boost::scoped_array<byte> img(new byte[sz]);
+```
+特性:
+* 用于处理legacy code with lots of dynamic arrays
+* C++建议使用std::vectors over dynamic arrays
 
+```cpp
+std::unique_ptr
+```
+$C^{++}11$引入了std::unique_ptr智能指针模板, 代替过时的std::auto_ptr, 标准的unique_ptr可以和boost::scoped_ptr对应
+* default-constructed unique_ptr包含一个null指针，nullptr,
+* get(), 得到包含的指针
+* swap(), 交换指针
+* operator*, operator->访问成员
 
+**ownership transfer using unique_ptr,**
+
+**make_unique in C++14**
+std::make_unique, create an object on dynamic memory and wrap it in std::unique_ptr, 
+```cpp
+std::unique_ptr<Logger> logger = 
+    std::make_unique<Logger>(filename)
+```
+
+**shared ownership semantics**
+有些情况下需要分享资源across multiple contexts,不同的上下文, 不知道具体的owner是谁?
+
+例子:2个线程在一个进程里，读取内存中动态分配的数据的不同的部分，每个线程都会去处理数据、读取数据。当最后一个线程终止时，应该回收数据内存。但是哪一个线程应该来做回收动作呢?
+
+用智能指针来封装buffer, 当索引计数为0时，自动回收buffer资源。
+
+```cpp
+boost::shared_ptr
+std::shared_ptr
+```
+特性:
+* 支持move semantics,
+* as a class member,分享数据库连接给多个应用，可以使用shared_ptr,
+* 可以放在多个STL container里面
+* 可以由多个线程共享
+
+**Non owning aliases**
+boost::weak_prt, std::weak_ptr,
+boost::make_shared, std::make_shared,
+
+**intrusive smart pointers**
+boost::intrusive_ptr,
+reference count并不是share_ptr的一部分, 
+
+# chap 4 Working with strings
 
 
 
