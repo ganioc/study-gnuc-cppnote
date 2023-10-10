@@ -243,6 +243,76 @@ boost::intrusive_ptr,
 reference count并不是share_ptr的一部分, 
 
 # chap 4 Working with strings
+文本数据通常表示为一个序列的，一组character, 或string, 分布在连续的内存空间，以null作为terminator. C++标准将字符串的概念抽象化,使用了class template std::basic_string, 
+basic_string模板有3个参数:
+* character type
+* 一些intrinsic properties , behaviors of the character type 封装在trait class里
+* an allocator type, 分配内部的数据结构
+
+```cpp
+template <typename charT
+    typename  Traits = std::char_traits<chart>,
+    typename Allocator = std::allocator<chart>>
+std::basic_string;
+```
+C++03有, 
+```cpp
+std::string, narrow characters, 8-bit char
+std::wsting, wide characters, 16 or 32-bit wchar_t
+```
+C++11,
+```cpp
+std::u16string, u16char_t
+std::u32string, u32char_t
+```
+plain old C-style strings, POC, char, wchar_t, in legacy C++code,
+
+transform, algorithm, 算法转换
+boost:to_upper, 看起来更好理解一些,
+Boost.Range, 
+boost::iterator_range, 使用一对iterator,来表示不同种类的ranges,
+boost::contains, 
+find algorithms,
+```cpp
+boost::find_first
+boost::find_last
+boost::find_nth
+boost::find_all,
+boost::find_token(), 查找词，也就是token,
+boost::iter_find,
+boost::find_regex,
+boost::find,
+boost::find_head, 获取字符串里的一部分
+boost::find_tail, 带offset的,
+boost::start_with,
+boost::ends_with,
+boost::equals,
+boost:contains,
+
+```
+What is a functor?
+>函数对象
+
+boost range lib, 
+
+trimming algorithms
+```cpp
+boost:trim_left
+boost::trim_right
+boost::trim
+```
+
+replace and erase algorithms,
+
+split and join algorithms
+
+**Regular expressoin**
+boost::regex,
+
+
+
+
+
 
 
 

@@ -9,6 +9,6 @@ currentfunc_srcs = files(['current_func.cpp'])
 
 memmanage_srcs = files(['mem_manage.cpp'])
 
-
+string_srcs = files(['str.cpp'])
 
 

@@ -7,7 +7,10 @@
         "ostream": "cpp",
         "bitset": "cpp",
         "chrono": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "string": "cpp",
+        "*.ipp": "cpp"
     },
-    "C_Cpp.default.compileCommands": "builddir/compile_commands.json"
+    "C_Cpp.default.compileCommands": "builddir/compile_commands.json",
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc"
 }

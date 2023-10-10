@@ -27,6 +27,9 @@ executable('memmanage',
     memmanage_srcs,
     include_directories: incdir)
 
+executable('str',
+    string_srcs,
+    include_directories: incdir)
 
 
 
