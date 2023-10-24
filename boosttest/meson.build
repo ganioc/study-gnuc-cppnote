@@ -31,5 +31,19 @@ executable('str',
     string_srcs,
     include_directories: incdir)
 
+executable('move',
+    move_srcs,
+    include_directories: incdir)
+
+executable('assign',
+    assign_srcs,
+    include_directories: incdir)
+
+executable('searchtree',
+    searchtree_srcs,
+    include_directories:incdir)
+
+
+
 
 

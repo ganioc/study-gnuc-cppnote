@@ -309,6 +309,121 @@ split and join algorithms
 **Regular expressoin**
 boost::regex,
 
+# chap 5 Effective Data Structures beyond STL
+标准库的通用容器
+```cpp
+std::vector
+std::deque
+std::list
+std::forward_list
+```
+ordered and unordered associative containers
+```cpp
+std::map
+std::set
+std::unordered_map
+std::unordered_set
+```
+访问使用iterators, 
+>read, write, forward traversal,bidirectional traversal, random access. 根据，依赖the internal structure of a container
+
+Standard Template Library, STL, 
+Developed at HP Labs by Alexander Stepanov and Meng Lee, 在1994年接纳为C++语言的一部分, 
+C++ heavily used STL containers and algorithms,Boost提供了一些有用的库弥补这些gap,
+
+**Boost Container library**
+什么对象能够存储在STL container里，什么不能呢？
+
+std::vector, object对象类型T,必须是一个完整的类型, 不能只是declared, 必须完整定义了的, 
+一般来说，在C++11之前, type T的对象object 必须是copyable 和assignable的。container拷贝-intensive framework. 
+到了C++11, 引入了move 语法, 使得move-construct new objects, by 移动，usruping the state of an exisiting object, 类似的, object的状态、内容可以被移动到另一个存在的对象里，通过move-assignment操作。C++11还运行对象直接在容器里面建立，而不是先生成再拷贝。
+
+**Move-awareness and in-place construction**
+使用Boost move emulation macros to define its move semantics. 
+
+```cpp
+rvalue // C++ rvalue reference syntax,
+boost::move // explicitly move
+```
+move-aware containers, very similar to C++11 counterparts, 
+
+**Nonstandard containers**
+Flat associative containers
+分为2种, 
+ordered , 
+>std::set, std::multiset, std::map, std::multimap,
+
+一般是使用平衡搜索树来实现的，de facto实现标准是，优化了的红黑树, 是按照排列的顺序存储成员的,因此是有序的。
+
+unordered,
+>std::unordered_set, std::unordered_multiset, std::unordered_map, std::unordered_multimap, 
+
+一般是用hash表来实现的，in an array of buckets, 根据对象的值的hash结果来进行检索的。
+
+Associative 容器支持快速查找，有序容器使用平衡的搜索树支持对数时间的搜寻，hash表支持固定时间的搜索, 
+
+Binary search on sorted sequence允许随机位置的访问，同样支持对数时间的搜索, 
+```cpp
+flat_set,
+flat_multiset,
+flat_map,
+flat_multimap,
+```
+Flat associative containers, 可以存储既不copyable也不movable的对象。对象存储在连续地址的内存里面，不使用指针。比使用tree-based, hash-based的容器更加节省内存。
+
+**slist**
+a singly-linked list abstraction similar to container template in SGI STL implementations, std::list是一个双向链表,C++11引入了单向链表std::forward_list,slist是move-aware的，
+
+**splicing**
+in constant time, spice, 
+
+**stable-vector**
+std::vecotr, 标准库是不稳定的, 
+moot:无考虑意义,
+
+**boost.assign**
+存放指针的容器, ptr_vector,自动回收，并处理exception,
+
+**boost.iterator**
+Iteration pattern, a framework for writing iterators for custom classes that conform to the standards and are compatible with algorithms in the Standard Library. more abstract object collections, not limited to containers.
+
+iterator adaptors,
+- Filter iterator, boost::make_filter_iterator, 
+- Transform iterator, boost::make_transform_iterator, 
+- Function output iterator, 
+
+binary search tree. the left subtree of a node are smaller than the node, all elements in the right sub-tree of a node are larger than the node. Nodes with zero children are called leaves. A threaded binary search tree is optimized for traversing its elements in a sorted order, the so-called inorder traversal.
+
+- bidirectional iterator , allow forward and reverse traversal of the tree in the order of its elements,
+
+boost::iterator_core_access, 派生,生成自己的iterator, 
+- dereference function, 
+- equal(), 
+- begin()
+- end(), 
+
+# chap 6 Bitmap and Multi-index containers
+标准库具有ordered, unordered associative containers for storing objects and looking them up efficiently using some *key*.
+ordered-container
+```cpp
+std::set, std::map,
+```
+unordered-container
+```shell
+compute a integer hash value for each key, 
+``` 
+根据不同的索引值进行搜索, 
+
+## Containers for multi-criteria lookups
+
+
+
+## Boost Multi-index containers
+
+
+## Boost Bitmap
+
+
 
 
 

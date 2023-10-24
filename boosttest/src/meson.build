@@ -11,4 +11,9 @@ memmanage_srcs = files(['mem_manage.cpp'])
 
 string_srcs = files(['str.cpp'])
 
+move_srcs = files(['move.cpp'])
+
+assign_srcs = files(['assign.cpp'])
+
+searchtree_srcs = files(['searchtree.cpp'])
 
