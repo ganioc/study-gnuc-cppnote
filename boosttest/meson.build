@@ -43,7 +43,9 @@ executable('searchtree',
     searchtree_srcs,
     include_directories:incdir)
 
-
+executable('multicriteria',
+    multicriteria_srcs,
+    include_directories:incdir)
 
 
 

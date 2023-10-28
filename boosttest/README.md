@@ -422,6 +422,25 @@ compute a integer hash value for each key,
 
 
 ## Boost Bitmap
+Standard Library has ordered and unordered associative containers for storing objects and looking them  up efficiently using some key.
+
+key可以是
+text type, 
+numeric type,
+first-class objects,
+
+std::set, 
+>不能有重复
+
+std::multiset
+>可以有重复,
+
+**containers for multi-criteria lookups**
+
+**boost multi-index containers**
+
+**boost bitmap**
+
 
 
 
