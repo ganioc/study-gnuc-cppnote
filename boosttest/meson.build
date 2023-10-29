@@ -47,5 +47,12 @@ executable('multicriteria',
     multicriteria_srcs,
     include_directories:incdir)
 
+executable('highorder',
+    highorder_srcs,
+    include_directories: incdir)
+
+executable('phoenix',
+    phoenix_srcs,
+    include_directories: incdir)
 
 

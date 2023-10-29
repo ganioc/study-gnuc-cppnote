@@ -18,3 +18,7 @@ assign_srcs = files(['assign.cpp'])
 searchtree_srcs = files(['searchtree.cpp'])
 
 multicriteria_srcs = files(['multicriteria.cpp'])
+
+highorder_srcs = files(['higherorder.cpp'])
+
+phoenix_srcs = files(['phoenix.cpp'])

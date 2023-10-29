@@ -435,19 +435,187 @@ std::set,
 std::multiset
 >可以有重复,
 
+index types,
+>sequenced index, random index,  
+
 **containers for multi-criteria lookups**
 
 **boost multi-index containers**
 
-**boost bitmap**
+**boost bimap**
+lookup table abstraction
+std::map
+std::multimap,
+to look up a key given a value, 从值查找key,
+bimaps,  bidirectional mapping, 
 
+Collection types:
+除了one-to-one mapping,还支持one-to-many, many-to-many mappings, 这不就是个数据库吗？
 
+|  Collection Types   | Semantics  | View Types |
+|  ----  | ----  | ---- |
+| set_of  | ordered, unique |  map    |
+| multiset_of | Ordered, non-unique | multimap |
+| unordered_set_of| Hashed ,unique| unordered_map  |
+| unordered_multiset_of| Hashed, non-unique|unordered_multimap|
+| unconstrained_set_of| Unconstained| No view available |
+| list_of | Non-ordered, non-unique |Linked list of ky-value pairs|
+| vector_of | Non-ordered, non-unique,random access sequence| vector of key-value pairs |
 
+**projections**
 
+# chap 7 Higher Order and Compile-time Programming
+callback entities, function objects, 回调对象，函数对象, functors,
 
+将一个函数对象作为参数传给算法, 
+也可以返回一个函数对象,
+give rise to higher order transforms, 高阶变换,
+higher order programming: 传送,返回函数，
 
+C++ templates, 模版, 这种编程模式, style, 被称为: compile-time programming or template metaprogramming,
+编译时编程，模版元编程
+Boost Phoenix Library, C++ 11 facilites, bind and lambda,
+在编译时使用的template metaprogramming, 
+Domain Specific Embedded Languages,
 
+generic programming techniques,
 
+functor,
+是一个类、结构体, 定义了重载的function call operator,
+predicate,
+takes one or more arguments and maps them to a Boolean truth value
+arity,
+number of arguments it takes,
+nullary, 无参数，
+unary,单一参数
+binary, 两个参数
+pure function, with no side effects,
+
+**lambda**
+[](){}, lambda captures,
+=， 访问scope里的所有变量,
+&var, 访问某一个变量, as a reference,
+
+High-level C++ API, 
+The client of your API must register for the types of messages it is interested in and pass a callback - a function object. 
+Your API could be a member of a Queue class.
+
+Boost.Function library,
+std::function, C++ 11,
+C++ 11 variadic templates,
+calling scope, accessible in another scope via the lambda capture,
+dynamic scoping, 
+closures, 
+delegates, callbacks especially bound to specific objects are called.
+
+还是应该来学习现代C++，
+
+**partial function**
+boost::bind(pow, _1, 3), a wrapper function, 
+>bind a member funciton to an object instance,
+boost::mem_fn, std::mem_fn(),
+
+reference,
+pointer,
+smart pointer,
+
+**Compile-time programming**
+模版可以允许写C++ code, 与输入参数的类型无关，thus work unchanged with a large family of types. 
+
+* function templates
+* class templates,
+* struct templates,
+
+C++ templates, 强大的计算子系统，查看数据类型,
+glean their properties,
+write sophisticated recursive and branching logic
+at compile time,
+
+提供generic interfaces, highly optimized for each type operate upon
+
+```cpp
+boost::lexical_cast<double>(strPi);
+```
+Boost Type Traits Library,
+
+decltype, computing the type of an expression,
+boost::is_pod, Plain Old Data type, 
+boost::true_type,
+boost::false_type,
+对于基础数据，可以进行shallow copy, or memcpy; non-POD type, to perform element by element copies,
+
+boost::is_base,
+boost::is_copy_constructable,
+boost::has_pre_increment,
+boost::is_same,
+
+**SFINAE**
+Substitution Failure is Not An Error, 
+>no candidates, or ambiguity,
+
+模版里面的overload resolution set, 
+boost::enable_if
+boost:;disable_if,
+
+**Boost Phoenix**
+Boost Phoenix 3 is a library for enabling functional programming constructs in C++. DSEL, domain specific embedded language,
+lazy expressions, expression templates,
+
+Boost Spirit Parser Framework,
+actors:
+>abstractions for lazy functions. Used to generate unnamed functions or lambdas. composed to generate more complex functors. In that sense, Phoenix is a lambda language library.
+
+Actors are categorized based on functionality and exposed through a set of header files. 
+
+ref:
+>to create a lazy mutable variable reference
+
+cref:
+>generates a lazy immutable reference
+
+arithmetic, +,-
+comparison, <,==,>
+logical, &&, ||,
+bitwise operators, |,^,&,
+
+boost::phoenix::ref
+>generate an actor for lazily evaluating the variable , and cache it in a varible x.
+boost::phoenix::val,
+boost::phoenix::placeholders::_1, _2, etc.
+
+**Boost Spirit Parser Framework**
+a popular DSEL used for generating lexers and parsers.
+生成C or C++ code from a language neutral specification in the Extended Backus-Naur Form (EBNF),
+Uses only the C++ compiler to generate parsers, 解析器,
+Spirit makes heavy use of template metaprogramming, resulting in slower compile time sbut generates parsers that are efficient at runtime.
+
+Spirit包含
+- Spirit Lex, a lexer, 词法分析器,
+- Spirit Qi, a parser, 
+  - parse text data according to some specified gramma
+  - verifying that the input conforms to the grammar
+  - decomposing a conforming input into meaningful semantic components
+- Spirit Karma, a generat, 
+
+to build powerful data translation enginers,
+
+Predefined parsers,
+- Integers
+- Real numbers
+- Boolean
+- Characters,
+- Strings,
+
+Spirit defines a number of overloaded operators, called parser operators,
+
+# chap 8 Date and Time Libraries
+时间，以及测试代码性能, 
+
+**Boost Date Time**
+
+**Boost Chrono**
+
+**Boost Timer**
 
 
 
