@@ -10,3 +10,4 @@ subdir('pthread')
 
 subdir('ffi')
 
+subdir('numerical')
