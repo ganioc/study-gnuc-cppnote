@@ -22,3 +22,5 @@ multicriteria_srcs = files(['multicriteria.cpp'])
 highorder_srcs = files(['higherorder.cpp'])
 
 phoenix_srcs = files(['phoenix.cpp'])
+
+posixtime_srcs = files(['posixtime.cpp'])

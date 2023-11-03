@@ -5,8 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/cpptest/include",
-                "/usr/include/boost",
-                "/usr/include"
+                "/usr/include",
+                "/usr/include/boost"
             ],
             "defines": [],
             "intelliSenseMode": "linux-gcc-x64",

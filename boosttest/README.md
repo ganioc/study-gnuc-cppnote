@@ -622,10 +622,48 @@ Spirit defines a number of overloaded operators, called parser operators,
 时间，以及测试代码性能, 
 
 **Boost Date Time**
+时间系统的分辨率, Resolution,
+
 
 **Boost Chrono**
+用来测量时间。与std::chrono, 大部分功能兼容。
+```cpp
+boost::ratio
+boost::chrono::duration<>
+```
+Clocks and time points,
+Unix, POSIX epoch January 1, 1970 00:00:00 UTC,
+```cpp
+duration
+time_point
+now,
+// clocks
+system_clock, // wall clock, system time
+steady_clock, // monotonic time system,
+high_resolution_clock,x  // 高精度时钟
+```
+编译时，可能需要链接的库, 
+```cpp
+-lboost_system -lboost_timer -lboost_chrono -lrt
+
+process_real_cpu_clock // measruing the total time since a program started
+process_user_cpu_clock // the time a program runs for in the user space
+process_system_cpu // measuring the time the kernel runs some code on behalf of the program
+thread_clock // total time for which a particular thread is scheduled. BOOST_CHRONO_HAS_THREAD_CLOCK preprocessor macro is defined
+```
 
 **Boost Timer**
+测量代码运行时间，性能,
+a separately compiled library, not header-only, internally uses Boost Chrono
+```cpp
+boost::timer::cpu_timer
+boost::timer::auto_cpu_timer
+``` 
+需要用到boost::timer库, start(), resume(), stop()
+
+
+
+
 
 
 

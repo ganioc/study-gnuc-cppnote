@@ -1,6 +1,9 @@
 
 cc = meson.get_compiler('cpp')
 boost_dep = cc.find_library('boost_program_options',required: true)
+boost_dep_chrono = cc.find_library('boost_chrono',
+required: true)
+boost_dep_timer = cc.find_library('boost_timer', required:true)
 
 subdir('src')
 
@@ -55,4 +58,7 @@ executable('phoenix',
     phoenix_srcs,
     include_directories: incdir)
 
-
+executable('posixtime',
+    posixtime_srcs,
+    include_directories: incdir,
+    dependencies: [boost_dep_chrono, boost_dep_timer])
