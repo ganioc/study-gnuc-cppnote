@@ -24,3 +24,7 @@ highorder_srcs = files(['higherorder.cpp'])
 phoenix_srcs = files(['phoenix.cpp'])
 
 posixtime_srcs = files(['posixtime.cpp'])
+
+files_srcs = files(['files.cpp'])
+
+compression_srcs = files(['compression.cpp'])

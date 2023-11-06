@@ -7,6 +7,8 @@ Boost.Regex: A regular expression library
 Boost.Spirit: A library for parsing and generation of text
 Boost.Bind: A library for creating function objects and bindings
 
+如何得到Boost的版本呢?
+
 
 ## smart pointer,
 
@@ -660,6 +662,140 @@ boost::timer::cpu_timer
 boost::timer::auto_cpu_timer
 ``` 
 需要用到boost::timer库, start(), resume(), stop()
+
+# chap 9 Files, Directories and IOStreams
+Provide programmatic accesss to OS substystem. Boost libraries for performing input and output, and interacting with filesystems. 
+
+编写可以移植的C++程序，与文件系统交互，使用标准接口来进行I/O操作。
+Boost支持Linux, Windows, Mac OS, BST variants. 
+
+文件路径:
+```cpp
+boost::filesystem::path
+
+```
+parent path, the path stripped of the filename
+relative path, the path following the leading slash
+extension, 包含period or dot,
+stem, the path is the stem
+root name,
+root directory, leading backslash following the root name,
+root path, 
+
+遍历目录结构:
+生成目录
+```cpp
+boost::filesystem::create_directories()
+::create_directory_symlink(target, link)
+::create_symlink(target, link)
+::copy_file( )
+::copy_symlink(), 
+::copy_directory()
+fs::directory_iterator
+boost::filesystem::rename(const path& old_path, new_path)
+::remove(path& p)
+::remove_all(p)
+```
+
+Path-aware fstreams
+
+## Extensible I/O with Boost IOStreams
+### Architecture of Boost IOStreams
+Boost IOStreams library, a framework for operations of all kinds on all manner of devices. With a simpler interface for extending I/O facilities to newer devices. 标准的IOStream框架，提供了两个基本的抽象:
+- streams, 
+>提供了一个同意的接口来读写a sequence of characters在底层的设备之上
+- stream buffers
+>提供了一个lower-level抽象，实际设备device, 被之上的streams调用
+
+Boost提供了
+```cpp
+boost::iostreams::stream
+boost::iostreams::stream_buffer 模版
+```
+提供了一些概念和抽象
+```cpp
+source, an object from which a sequence of characters can be read
+sink, an object to which a sequence of characters can be written
+device, a sink, source or both
+input filter, modifies a sequence of characters read from a source
+output filter, modifies a sequence of characters before it is written to a sink
+filter, an input or output filter, known as a dual use filter
+```
+为了在device上实施I/O操作, 我们在stream, stream_buffer上联系上一组zero or more filters plus the device. 
+A sequence of filters 称为 chain,
+一组filters加device at the end, 称为complete chain,
+
+**Using devices,**
+```cpp
+fstreams
+boost::iostreams::file_descriptor_source
+boost::iostreams::file_descriptor_sink
+boost::iostreams::file_descriptor device
+```
+
+device reading writing memories
+
+boost_iostreams
+
+```cpp
+template<class Device, class Tr, class Alloc>
+struct stream
+
+array_sink
+back_insert_device, // buffer可以增长
+tee_device, // write to 2 devices at the same time
+```
+遇到问题了，有可能是Boost库不兼容的问题,折腾了半天，发现原来是因为没有包含stream.hpp头文件。改了就好了，与库版本无关。
+
+std::ends, array is terminating null character
+std::flush, make sure the content is not held in the device buffer, before we call strlen.
+
+**Using Filters**
+Do a variety of things, like
+* tagging keywords
+* translating text
+* performing regular expression substitution
+* performing compression or decompression
+* observer filters can compute line and word counts
+* compute a message digest among other things
+
+必须使用filtering streams, filtering stream buffers, 形成一个chain
+
+Basic filters
+
+Grep Filter
+
+Compression Filters, gzip, zlib, bzip2 formats.
+
+gzip and zlib, DEFLATE algorithm for compression
+bzip2 使用更加节省空间的 Burrows-Wheeler algorithm, 
+
+压缩和解压缩,
+使用filtering_stream 进行串联, 
+
+**composing filters**
+Form a pipleline strating with the outermost filter, inserting the filters in the desired order, and ending with the device.
+
+使用|来连接pipeline, 有点像那个GStreamer,
+
+# chap 10 Concurrency with Boost
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
