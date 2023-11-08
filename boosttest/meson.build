@@ -8,6 +8,8 @@ boost_dep_files = cc.find_library('boost_filesystem', required:true)
 boost_dep_system = cc.find_library('boost_system', required:true)
 boost_dep_iostreams = cc.find_library('boost_iostreams',required:true)
 boost_dep_regex = cc.find_library('boost_regex',required:true)
+boost_dep_thread = cc.find_library('boost_thread', required:true)
+boost_dep_coroutine = cc.find_library('boost_coroutine', required:true)
 
 subdir('src')
 
@@ -78,4 +80,8 @@ executable('compression',
 
 executable('paralleltest',
     paralleltest_srcs,
-    dependencies:[])
+    dependencies:[boost_dep_system, boost_dep_thread,boost_dep_chrono])
+
+executable('coroutines',
+    coroutines_srcs,
+    dependencies:[boost_dep_coroutine])

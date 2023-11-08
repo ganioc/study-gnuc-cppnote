@@ -779,18 +779,80 @@ Form a pipleline strating with the outermost filter, inserting the filters in th
 使用|来连接pipeline, 有点像那个GStreamer,
 
 # chap 10 Concurrency with Boost
+thread.join()
+thread.detach(), 直到main app退出才会退出。
 
+**Shared Data**
+并行任务, longest common subsequence problem,
+```cpp
+boost::future
+boost::promise
+```
+future template is used to represent the result of a computation that potentially happens in the future. future enables a calling code to wait or block for an event to happen, the event of producing a value of a certain type. 这个机制可以用来signal events and pass values from one thread to another.
 
+promise , is used to signal events and send values to future, across threads. 
 
+**Throwing exceptions across threads**
 
+boost::async
+boost::packaged_task,
+std::launch::async, to run on a separate thread,
+std::launch::deferred, 
 
+**Lock-based thread synchronization methods**
+data races and atomic operations,
+Mutual exclusion, boost::mutex,
+Critical sections,
 
+boost::lock_guard, 然而不是exception-safe的,
+boost::lock_guard<> 使用了RAII, Resource Acquisition Is Initialization, 可以在constructor, destructor里面lock和unlock mutexes
 
+boost::unique_lock,
+死锁, Deadlocks, 
 
+vying, 竞争, 避免的话，采用fixed order of resource acquision,
+>另一种方法是try_lock()
 
+**Synchronization on conditions**
+Conditions,
+Mutex 将共享资源的访问串行化, 通过生成critical section的方法。有时, threads需要等待一个条件的发生，比如一些共享数据改变了状态。
 
+生产者-消费者问题,
+比如grep就是这样一个问题。一组线程生成内容，将内容凡在一个数据结构里, 第二组线程从数据结构里读取内容，执行计算。如果数据是空的，那么消费者必须等待生产者将内容加入数据结构。消费者等待某些条件的满足。
 
+boost::condition-variable,
+For a thread-safe, fixed-size queue,
 
+**Readers-writers problem**
+MRSW, Multiple Readers Single Writers,
+boost::shared_mutex, SharedLockable concept,
+boost::lock_guard,
+boost::unique_lock,
+upgrade lock?
+
+## Boost Coroutine
+functions, can yield or relinquish control to another coroutine, and then given control back, resuming from the point at which they earlier yielded.
+
+The state of automatic variables is maintained between a yield and resumption. Coroutines can be used for complex control flow patterns with surprisingly simple and clean code.
+
+Boost Coroutine library 提供了两种coroutines:
+- Asymmetirc coroutines,
+>distinguish between a caller and a callee coroutine. A callee can only yield back to the caller. Often used for unidirectional data transfer from either the callee to caller, or the other way.
+- Symmetric coroutines,
+>can yield to other coroutines, irrespective of who the caller was. Can be used to generate complex cooperative chains of coroutines.
+
+suspended, yield control,
+registers are saved. On resumption, the regiters are restored and execution continues yeond the point of the yield. Boost use the Boost Context library for this purpose.
+
+stackful coroutines vs. stackless coroutines, 
+nested stackframe. With stackless协程, the top level routine may suspend itself. 这里只研究asymmetric stackful coroutines.
+
+```cpp
+boost::coroutines::asymmetric_coroutine<>
+::push_type()
+::pull_type()
+
+```
 
 
 

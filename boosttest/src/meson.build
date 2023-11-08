@@ -31,3 +31,4 @@ compression_srcs = files(['compression.cpp'])
 
 paralleltest_srcs = files(['paralleltest.cpp'])
 
+coroutines_srcs = files(['coroutines.cpp'])
