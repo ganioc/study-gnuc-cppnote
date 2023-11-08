@@ -75,3 +75,7 @@ executable('files',
 executable('compression',
     compression_srcs,
     dependencies:[boost_dep_iostreams])
+
+executable('paralleltest',
+    paralleltest_srcs,
+    dependencies:[])

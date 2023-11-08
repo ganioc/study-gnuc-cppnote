@@ -28,3 +28,6 @@ posixtime_srcs = files(['posixtime.cpp'])
 files_srcs = files(['files.cpp'])
 
 compression_srcs = files(['compression.cpp'])
+
+paralleltest_srcs = files(['paralleltest.cpp'])
+
