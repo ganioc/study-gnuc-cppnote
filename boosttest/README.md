@@ -854,14 +854,99 @@ boost::coroutines::asymmetric_coroutine<>
 
 ```
 
+# chap 11 Network Programming Using Boost Asio
+Portable library for performing efficient network I/O using a consistent programming model. 网络访问是一种异步I/O过程。不会阻塞os的其它工作。
+异步交互模型:
+1. Task execution with Asio
+2. Network Programming using Asio
 
+boost::asio::io_service,
 
+asio handler的状态:
+run,
+>Blocks until queue中再没有handlers了。
 
+run_one,
+>blocks on a nonempty queue. 直到有一个handler转为ready. 
 
+poll
+>dispatches all the ready handlers 但是不会等任何handlers变为ready. 会直接返回。
 
+poll_one,
+>dispatches onley one ready handler, 不会block for pending handlers to get ready,
 
+pending and ready handlers,  handlers被posted to io_service, handlers与background tasks相关， 通过底层的OS来运行。completion handlers, The handlers are said to be pending, 直到associated task is awaiting completion, 当associated task完成后，handlers被称为ready了。
 
+post
+>add a handler to the task queue, returns immediately.
 
+dispatch
+>the handler will be invoked immediately. 
 
+**Concurrent execution via thread pools**
+io_service 是线程安全的, 多个线程可以并发地调用io_service. 如果task queue里有许多handlers的话，它们可以被多线程并发运行。threads调用run()时从thread pool 线程池来执行。连续的handlers可以被线程池中的不同的线程去执行。哪一个线程执行哪一个handlers是不确定的。因此handler的代码不能做任何假定。
+
+自然地生成了一个任务派发的模式，将任务放在一个queue里面，可以根据系统的具体情况用不同数量的线程去执行, 实现并发。
+
+io_service::work
+>keep threads engaged,
+
+strands
+>serialized and ordered execution, subsequence of the task queue with the constraint that no two handlers from the same strand ever run concurrently.
+
+## Network I/O using Asio
+Build scalable network services, that perform I/O over the network. 
+Asio 支持TCP, UDP, ICMP,
+
+UDP, User Datagram Protocol, datagrams,
+
+TCP, Transmission Control Protocol, 
+
+IP Address
+>numeric identifiers, 32 bit IP address, boost::asio::ip::address, 
+boost::asio::ip::address_v4
+boost::asio::ip::address_v6
+
+CIDR(Classless Interdomain Routing) notation
+>dotted-quad notation, a trailing slash and a number 0~32,
+
+**IPv6 addresses**
+8 2-byte unsigned hexadecimal integers,
+loopback address, ::1, unspecified address, :: (in6addr_any)25
+
+Hostname
+>fully-qualified domain name, domain name,
+
+Name resolution
+>maintain name-to-address mappings. a DNS server to resolve a fully-qualified domain name to an address. 进行解析的程序叫做 resolver, query for services on hostnames and obtain one or more endpoints for that service.
+
+Buffers,
+boost::asio::const_buffer
+boost::asio::mutable_buffer
+boost::asio::buffer_cast<char*>(mbuf)
+
+Buffer sequences for vectored I/O
+vectored I/O, or gather-scatter I/O, in buffer sequences, 必须满足以下要求:
+* has a member funciton begin, 返回一个双向iterator, which points to a mutable_buffer or const_buffer
+* has a member function end, 返回一个iterator指向sequence end
+* Is copyable, 可以拷贝
+
+## Synchronous Asynchronous Communications
+同步和异步通讯, 编写一个network client和server程序。
+client-server model of interaction, 
+server: service incoming requests, passive endpoints,
+client: initiates requests, active endpoints
+
+异步交互模型， event-driven and more complex, 使用 Asio coroutine can keep it very manageable.
+
+**Asio deadline timer**
+wait for a specific duration to elapse or for an absolute time point,
+
+**Asio coroutines**
+使用Asio 协程来实现异步逻辑, asynchronous logic
+async_wait()
+
+stackful coroutine,
+boost::asio::spawn() , 可以launch tasks as coroutines,
 
 

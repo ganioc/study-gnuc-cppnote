@@ -10,6 +10,7 @@ boost_dep_iostreams = cc.find_library('boost_iostreams',required:true)
 boost_dep_regex = cc.find_library('boost_regex',required:true)
 boost_dep_thread = cc.find_library('boost_thread', required:true)
 boost_dep_coroutine = cc.find_library('boost_coroutine', required:true)
+boost_dep_datetime = cc.find_library('boost_date_time', required:true)
 
 subdir('src')
 
@@ -85,3 +86,12 @@ executable('paralleltest',
 executable('coroutines',
     coroutines_srcs,
     dependencies:[boost_dep_coroutine])
+
+executable('asiotest',
+    asiotest_srcs,
+    dependencies:[boost_dep_system,boost_dep_coroutine, boost_dep_datetime, boost_dep_thread,boost_dep_chrono])
+
+executable('tcpip',
+    tcpip_srcs,
+    dependencies:[boost_dep_system,boost_dep_coroutine])
+    

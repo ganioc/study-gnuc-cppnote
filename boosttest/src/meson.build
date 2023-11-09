@@ -32,3 +32,7 @@ compression_srcs = files(['compression.cpp'])
 paralleltest_srcs = files(['paralleltest.cpp'])
 
 coroutines_srcs = files(['coroutines.cpp'])
+
+asiotest_srcs = files(['asiotest.cpp'])
+
+tcpip_srcs = files(['tcpip.cpp'])
