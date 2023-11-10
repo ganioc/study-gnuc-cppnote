@@ -94,4 +94,27 @@ executable('asiotest',
 executable('tcpip',
     tcpip_srcs,
     dependencies:[boost_dep_system,boost_dep_coroutine])
-    
+
+executable('udpclient',
+    udpclient_srcs,
+    dependencies:[])
+
+executable('udpserver',
+    udpserver_srcs,
+    dependencies:[])
+
+executable('udpserverasync',
+    udpserverasync_srcs,
+    dependencies:[])
+
+executable('udpservercorout',
+    udpservercorout_srcs,
+    dependencies:[boost_dep_coroutine])
+
+executable('tcpclient',
+    tcpclient_srcs,
+    dependencies:[])
+
+executable('tcpserver',
+    tcpserver_srcs,
+    dependencies:[boost_dep_system, boost_dep_thread])

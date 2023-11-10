@@ -949,4 +949,60 @@ async_wait()
 stackful coroutine,
 boost::asio::spawn() , 可以launch tasks as coroutines,
 
+**UDP**
+一个异步的udp server的响应能力会更强。
+```cpp
+async_receive_from()
+async_send_to()
+```
+
+Performance and Concurrency,
+shared_array
+shared_ptr,
+
+
+**TCP**
+和UDP相比,带有flow control流量控制, congestion control拥塞控制，每个连接都可以分配一部分带宽. TCP使用连接 connection 来连接端点。
+TCP 3-way handshake, 建立TCP连接。可以单向reset, terminated. 如某些场景下，应用、主机突然关机，中断，不可恢复的错误时。
+
+## C++ 11 Language Features Emulation
+### RAII
+The destructor of a c++ object on the stack is automtically invoked during stack unwinding. 发生在a scope is exited due to control reaching the end of the scope, or by 执行return, goto, break, or continue. 还有在发生exception throwing的时候。
+在heap上的C++ object不会这样处理。另外一些原始的数据类型,POD(Plain Old Data), 没有一个解析函数。
+我们可以生成一个wrapper class,构造函数获得资源的所有权，解析函数释放资源。这就是Resource Acquisition is Initialization, RAII
+
+### Copy semantics
+隐含定义的copy constructor,调用member of class的copy 构造函数
+assignment operator, member-wise assignment, 
+```cpp
+Bar b2(b1); // copying
+b2=b1, // assigning
+```
+
+**Rule of Three**
+destructor of  a class
+copy constructor
+assignment operator
+
+**Rule of Zero**
+使用智能指针, resource wrapper, 
+noexcept, swap 交换原始类型的变量不应该cause any exceptions to be thrown. 永远不会进入一个未知的状态，永远不会出问题。
+
+**Move semantics and rvalue references**
+语义学, 
+=delete, 禁止copy函数, 
+moves the contents out of its argument, 释放参数, 
+rvalue references, socket &&, double ampersands,
+lvalue expressions,
+rvalue-reference overloads,
+std::move(), such expressions are called xvalues, expired values,
+
+RVO(Return Value Optimization)
+NRVO(Named Return Value Optimization)
+Copy Elision,
+
+**Move emulation using Boost.Move**
+
+**C++ 11 auto**
+可以使用auto定义符, type deduction, 
 

@@ -36,3 +36,15 @@ coroutines_srcs = files(['coroutines.cpp'])
 asiotest_srcs = files(['asiotest.cpp'])
 
 tcpip_srcs = files(['tcpip.cpp'])
+
+udpclient_srcs = files(['udpclient.cpp'])
+
+udpserver_srcs = files(['udpserver.cpp'])
+
+udpserverasync_srcs = files(['udpserverasync.cpp'])
+
+tcpclient_srcs = files(['tcpclient.cpp'])
+
+tcpserver_srcs = files(['tcpserver.cpp'])
+
+udpservercorout_srcs = files(['udpservercorout.cpp'])
