@@ -1,7 +1,7 @@
 ## System Programming
 
 book
-- Hands-on System Programming with C++
+- "<< Hands-on System Programming with C++ >>"
 
 使用系统调用的API的程序，就被称为系统编程。通过调用操作系统的API实现功能的程序就叫做系统程序，这种行为就是系统编程。
 
@@ -59,7 +59,14 @@ GSL Refresher,
 **模版**
 Templates used in C++,
 
+定义了操作系统的ABI, with a well defined API. 我们将讨论3种标准
+- C 标准
+>定义了程序的链接和执行标准，C语法, C库，提供ABI-to-API wrapper. C库可以认为是POSIX标准的一个子项，提供了不局限于filesystem, network, threading库
 
+- C++ 标准
+>定义了C++语法，程序链接和执行, C++库提供更高层的抽象对C和POSIX标准。这里讨论C++ 17
+
+- POSIX 标准
 
 
 
